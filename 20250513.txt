@@ -1,0 +1,71 @@
+10:07 AM 5/13/2025
+ОТЧЁТ 13 мая 2025
+WLC.TXT
+VIM WLC.TXT
+Работа с контроллером беспроводных локальнайх сетей
+Цель: Научиться создавать различные локальные беспроводные сети с изолированным пространством VLAN
+Порядок подключения контролллера и LAP:
+1. Обеспечить физическое подключение контроллера к легковесным точкам доступа vlan1 на коммутаторе
+2. Настроить ip-конфигурацию на интерфейсе management контроллера
+3. Настроить DHCP-сервер для доступа LAP к контроллеру - указать ip-адресс контроллера в настройке WLC
+4. Проверка подключения точек к контроллеру CAPWAP статус
+5. Добавляем локальные беспроводные сети к настройке контроллера WLAN, указывает номера VLAN для каждой сети
+6. Добавляем нужные VLAN в коммутатор, проводим порты с подключением LAP в режим trunk
+7. Добавляем беспроводные устройства и подключаем их к нужной беспроводной сети
+При подсоединении контроллера к интерфейсу маршрутизатора необходимо настроить helper-address для всех интерфейсов к еоторым будут подключаться беспроводные клинты:
+Router(config-subif)#IP AD 192.168.10.254 255.255.255.0
+
+% Configuring IP routing on a LAN subinterface is only allowed if that
+subinterface is already configured as part of an IEEE 802.10, IEEE 802.1Q,
+or ISL vLAN.
+
+Router(config-subif)#
+
+interface GigabitEthernet0/0
+ ip address 192.168.100.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 192.168.101.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ ip address 192.168.102.254 255.255.255.0
+ ip helper-address 192.168.10.1
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2.2
+ encapsulation dot1Q 2
+ ip address 192.168.2.254 255.255.255.0
+ ip helper-address 192.168.10.1
+!
+interface GigabitEthernet0/2.3
+ encapsulation dot1Q 3
+ ip address 192.168.3.254 255.255.255.0
+ ip helper-address 192.168.10.1
+!
+interface GigabitEthernet0/2.4
+ encapsulation dot1Q 4
+ ip address 192.168.4.254 255.255.255.0
+ ip helper-address 192.168.10.1
+!
+interface GigabitEthernet0/2.5
+ encapsulation dot1Q 5
+ ip address 192.168.5.254 255.255.255.0
+ ip helper-address 192.168.10.1
+!
+interface GigabitEthernet0/2.6
+ encapsulation dot1Q 6
+ ip address 192.168.6.254 255.255.255.0
+ ip helper-address 192.168.10.1
+!
+interface GigabitEthernet0/2.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.254 255.255.255.0
+ ip helper-address 192.168.10.1
+!
+Работа с контроллером WLC
+11:42 AM 5/13/2025
